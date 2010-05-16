@@ -1,13 +1,16 @@
+use 5.010;
 use lib "lib";
+use lib "../RDF-RDFa-Generator/lib/";
 use Data::Dumper;
-use RDF::RDFa::Linter::Service::Facebook;
+use RDF::RDFa::Generator;
+use RDF::RDFa::Linter;
 use RDF::RDFa::Parser;
 use RDF::TrineShortcuts;
 
-my $uri    = 'http://srv.buzzword.org.uk/opengraph-to-json.html';
-my $model  = RDF::RDFa::Parser->new_from_url($uri)->graph;
-my $linter = RDF::RDFa::Linter::Service::Facebook->new($model, $uri);
+my $uri    = shift @ARGV || 'http://srv.buzzword.org.uk/opengraph-to-json.html';
+my $parser = RDF::RDFa::Parser->new_from_url($uri);
+my $linter = RDF::RDFa::Linter->new('Facebook', $uri, $parser);
 
-print rdf_string($linter->{'filtered'});
+my $gen = RDF::RDFa::Generator->new(style  => 'HTML::Pretty');
 
-print Dumper([ $linter->find_errors ]);
+say $gen->create_document($linter->filtered_graph, notes=>[$linter->find_errors])->toString;
