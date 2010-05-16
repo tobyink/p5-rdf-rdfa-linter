@@ -1,4 +1,4 @@
-package RDF::RDFa::Linter::Facebook;
+package RDF::RDFa::Linter::Service::Facebook;
 
 use 5.008;
 use common::sense;
@@ -48,12 +48,13 @@ sub find_errors
 	my ($self) = @_;
 	my @rv;
 	
-	push @rv, $self->_unknown_types;
+	push @rv, $self->_check_unknown_types;
+	push @rv, $self->_check_required_properties;
 	
 	return @rv;
 }
 
-sub _unknown_types
+sub _check_unknown_types
 {
 	my ($self) = @_;
 	my @errs;
@@ -91,6 +92,29 @@ sub _unknown_types
 					'link'    => 'http://opengraphprotocol.org/#types',
 				};
 		}
+	}
+	
+	return @errs;
+}
+
+sub _check_required_properties
+{
+	my ($self) = @_;
+	my @errs;
+	
+	my $sparql  = sprintf('DESCRIBE <%s>', $self->{'uri'});
+	my $hashref = rdf_query($sparql, $self->{'filtered'})->as_hashref;
+	
+	foreach my $prop (qw(title type image url))
+	{
+		push @errs,
+			{
+				'subject' => $self->{'uri'},
+				'error'   => 'Missing property: og:'.$prop,
+				'level'   => 2,
+				'link'    => 'http://opengraphprotocol.org/#metadata',
+			}
+			unless defined $hashref->{ $self->{'uri'} }->{ OGP_NS.$prop };
 	}
 	
 	return @errs;
