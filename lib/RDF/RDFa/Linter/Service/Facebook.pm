@@ -4,6 +4,7 @@ use 5.008;
 use common::sense;
 use constant OGP_NS => 'http://opengraphprotocol.org/schema/';
 use constant FB_NS  => 'http://developers.facebook.com/schema/';
+use RDF::RDFa::Linter::Error;
 use RDF::Trine;
 use RDF::Trine::Iterator qw'sgrep';
 use RDF::TrineShortcuts qw'rdf_query';
@@ -74,23 +75,23 @@ sub _check_unknown_types
 		unless ($row->{'type'}->is_literal)
 		{
 			push @errs,
-				{
+				bless {
 					'subject' => $row->{'subject'},
 					'error'   => 'Non-literal value for og:type: '.$row->{'type'}->as_ntriples,
 					'level'   => 3,
 					'link'    => 'http://opengraphprotocol.org/#types',
-				};
+				}, 'RDF::RDFa::Linter::Error';
 			next;
 		}
 		if ($row->{'type'}->literal_value !~ m/^($regexp)$/x)
 		{
 			push @errs,
-				{
+				bless {
 					'subject' => $row->{'subject'},
 					'error'   => 'Unrecognised value for og:type: '.$row->{'type'}->literal_value,
 					'level'   => 3,
 					'link'    => 'http://opengraphprotocol.org/#types',
-				};
+				}, 'RDF::RDFa::Linter::Error';
 		}
 	}
 	
@@ -108,12 +109,12 @@ sub _check_required_properties
 	foreach my $prop (qw(title type image url))
 	{
 		push @errs,
-			{
+			bless {
 				'subject' => $self->{'uri'},
 				'error'   => 'Missing property: og:'.$prop,
 				'level'   => 2,
 				'link'    => 'http://opengraphprotocol.org/#metadata',
-			}
+			}, 'RDF::RDFa::Linter::Error'
 			unless defined $hashref->{ $self->{'uri'} }->{ OGP_NS.$prop };
 	}
 	
