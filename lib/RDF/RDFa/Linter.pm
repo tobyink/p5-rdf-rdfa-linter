@@ -3,6 +3,7 @@ package RDF::RDFa::Linter;
 use 5.010;
 use common::sense;
 use RDF::RDFa::Linter::Error;
+use RDF::RDFa::Linter::Service::CreativeCommons;
 use RDF::RDFa::Linter::Service::Facebook;
 use RDF::RDFa::Parser;
 use RDF::Trine;
