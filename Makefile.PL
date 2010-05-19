@@ -3,7 +3,7 @@ use warnings;
 
 use inc::Module::Install;
 
-my $dist = 'Example-Example';
+my $dist = 'RDF-RDFa-Linter';
 my $fn   = "lib/$dist.pm"; $fn =~ s#-#/#g;
 
 name                $dist;

@@ -1,12 +1,14 @@
 package RDF::RDFa::Linter;
 
-use 5.010;
+use 5.008;
 use common::sense;
 use RDF::RDFa::Linter::Error;
 use RDF::RDFa::Linter::Service::CreativeCommons;
 use RDF::RDFa::Linter::Service::Facebook;
 use RDF::RDFa::Parser;
 use RDF::Trine;
+
+our $VERSION = '0.01';
 
 sub new
 {
@@ -111,12 +113,12 @@ sub cb_oncurie
 			return $preferred->{$pfx} . $sfx;
 		}
 		elsif ($pfx !~ m'^(http|https|file|ftp|urn|tag|mailto|acct|data|
-			fax|tel|modem|gopher|info|news|sip|irc|javascript|sgn|ssh|xri)$'ix)
+			fax|tel|modem|gopher|info|news|sip|irc|javascript|sgn|ssh|xri|widget)$'ix)
 		{
 			push @{ $self->{'parse_errors'} },
 				RDF::RDFa::Linter::Error->new(
 					'subject' => RDF::Trine::Node::Resource->new($self->{'uri'}),
-					'text'    => "CURIE '$curie' used but '$pfx' is not bound - perhaps you forgot to specify xmlns:${pfx}=\"".$preferred->{$pfx}."\"",
+					'text'    => "CURIE '$curie' used but '$pfx' is not bound - perhaps you forgot to specify xmlns:${pfx}=\"SOMETHING\"",
 					'level'   => 1,
 					);
 		}
@@ -126,3 +128,60 @@ sub cb_oncurie
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+RDF::RDFa::Linter - find common mistakes in RDFa files
+
+=head1 VERSION
+
+0.01
+
+=head1 SYNOPSIS
+
+ my $parser = RDF::RDFa::Parser->new_from_url($input_url);
+ my $linter = RDF::RDFa::Linter->new('Facebook', $input_url, $parser);
+ my $model  = $linter->filtered_graph;
+ my @errors = $linter->find_errors;
+
+=head1 DESCRIPTION
+
+In the above example, $model is an RDF::Trine::Model containing just the
+statements from $input_url that the service (in this case, Facebook's
+Open Graph) understands.
+
+@errors is a list of RDF::RDFa::Linter::Error objects. RDF::RDFa::Linter::Error
+is a subclass of RDF::RDFa::Generator::HTML::Pretty::Note, which comes in
+handy if you want to generate a report of the errors and filtered graph
+together.
+
+TODO: proper documentation!!
+
+=head1 BUGS
+
+Please report any bugs to L<http://rt.cpan.org/>.
+
+=head1 SEE ALSO
+
+L<XML::LibXML>, L<RDF::RDFa::Parser>, L<RDF::RDFa::Generator>.
+
+L<http://www.perlrdf.org/>.
+
+L<http://check.rdfa.info/>.
+
+=head1 AUTHOR
+
+Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
+
+=head1 COPYRIGHT AND LICENCE
+
+Copyright (C) 2010 by Toby Inkster
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8 or,
+at your option, any later version of Perl 5 you may have available.
+
+=cut
+

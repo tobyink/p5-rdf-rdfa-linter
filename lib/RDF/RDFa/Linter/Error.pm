@@ -6,6 +6,8 @@ use common::sense;
 use constant XHTML_NS => 'http://www.w3.org/1999/xhtml';
 use XML::LibXML qw':all';
 
+our $VERSION = '0.01';
+
 sub new
 {
 	my ($class, %self) = @_;

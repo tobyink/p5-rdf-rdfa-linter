@@ -6,6 +6,8 @@ use RDF::RDFa::Linter::Error;
 use RDF::Trine;
 use RDF::Trine::Iterator qw'sgrep';
 
+our $VERSION = '0.01';
+
 sub sgrep_filter
 {
 	my ($st) = @_;
@@ -17,7 +19,7 @@ sub info
 	return {
 		short        => 'Base',
 		title        => 'Base Service Class',
-		description  => 'This is the base class for all services. It shouldnot be used directly.',
+		description  => 'This is the base class for all services. It should not be used directly.',
 		};
 }
 

@@ -1,0 +1,55 @@
+<h1>FAQ</h1>
+
+<h2>What does this service do?</h2>
+	
+<p>
+	It checks your web page for <a href="http://www.w3.org/TR/rdfa-syntax/">RDFa</a>
+	and displays any data found there. It also compares your data against the published
+	recommendations from major consumers/users of RDFa data, to see how well your
+	data matches their requirements.
+</p>
+
+<p>
+	If your page doesn't raise any errors or warnings, it doesn't mean that your data is
+	perfect&nbsp;&#8212; it just means that your errors may have been too ingenious
+	for an automated tool to detect!!
+</p>
+
+<h2>Your service says my page is fine, but Google/Facebook/whatever can't see my data!</h2>
+
+<p>
+	Some services may have accidental or intentional deviations from the RDFa 
+	standard in their parsers. This service does not attempt to replicate such bugs;
+	nor can it, because I don't have insider information about how Google/Facebook/whatever
+	parses RDFa.
+</p>
+
+<p>
+	This service simply parses RDFa according to the W3C recommendations and
+	compares the end result to the schemas accepted by major consumers.
+</p>
+
+<h2>What's all this "widget://" stuff?</h2>
+
+<p>
+	RDFa allows authors to include relative links in their HTML, like <code>&lt;a rel="next"
+	href="page2">next&lt;/a></code>. If you use the file upload or code pasting facilities on
+	this RDFa checker, then, for the purposes of resolving relative links, the service assumes that
+	your document's base URL is something like <code>widget://blahblahblah.rdfa/self</code>
+	in the absence of evidence to the contrary.
+</p>
+
+<p>
+	If you're checking a web page by typing in its address or clicking on a link, then you should
+	never see this stuff.
+</p>
+
+<h2>My page used to have no errors, but now it has lots!</h2>
+
+<p>That's because we're adding extra checks all the time!</p>
+
+<h2>Your pages should be valid XHTML!</h2>
+
+<p>This service publishes valid XHTML5+RDFa and HTML5+RDFa. Most
+pages content-negotiate between the two. Some pages are also available in JSON
+via content-negotiation.</p>

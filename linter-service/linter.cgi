@@ -13,6 +13,7 @@ use HTTP::Negotiate qw'choose';
 use JSON;
 use RDF::RDFa::Generator;
 use RDF::RDFa::Linter;
+use RDF::RDFa::Linter::Error;
 use RDF::RDFa::Parser;
 use XML::LibXML qw':all';
 
@@ -25,7 +26,7 @@ my $template = slurp('linter-template.xml');
 my $dom = XML::LibXML->new->parse_string($template);
 my $xpc = XML::LibXML::XPathContext->new($dom);
 $xpc->registerNs('x', XHTML_NS);
-my $gen = RDF::RDFa::Generator->new(style=>'HTML::Pretty');
+my $gen = RDF::RDFa::Generator->new(style=>'HTML::Pretty', safe_xml_literals=>1);
 
 # Title
 my @title = $dom->getElementsByTagName('title');
@@ -45,13 +46,16 @@ $summary[0]->addNewChild(XHTML_NS, 'p')->appendTextNode("Results for <$url>.");
 
 # Main tab
 my $rdfa_parser = RDF::RDFa::Parser->new_from_url($url);
+my @main_errs;
+$rdfa_parser->set_callbacks({oncurie => \&main_cb_oncurie});
 my $main_tab = _add_tab($xpc, 'RDFa', undef, 0, 'All Data');
 $main_tab->addNewChild(XHTML_NS, 'p')->appendTextNode("This tab shows all RDFa data extracted from your page; the other tabs filter this data down to show what particular services will see.");
-foreach my $node ($gen->nodes($rdfa_parser->graph))
+foreach my $node ($gen->nodes($rdfa_parser->graph, notes=>\@main_errs))
 {
 	$node->setAttribute('class', $node->getAttribute('class').' rdfa');
 	$main_tab->appendChild($node);
 }
+@main_errs = qw();
 
 # Service tabs
 foreach my $srv (@services)
@@ -119,4 +123,69 @@ sub _add_tab
 	$a->appendTextNode($title);
 	
 	return $tab;
+}
+
+sub main_cb_oncurie
+{
+	my ($parser, $node, $curie, $uri) = @_;
+
+	return $uri unless $curie eq $uri || $uri eq '';
+
+	my $preferred = {
+			bibo => 'http://purl.org/ontology/bibo/' ,
+			cc => 'http://creativecommons.org/ns#' ,
+			ctag => 'http://commontag.org/ns#' ,
+			dbp => 'http://dbpedia.org/property/' ,
+			dc => 'http://purl.org/dc/terms/' ,
+			doap => 'http://usefulinc.com/ns/doap#' ,
+			fb => 'http://developers.facebook.com/schema/' ,
+			foaf => 'http://xmlns.com/foaf/0.1/' ,
+			geo => 'http://www.w3.org/2003/01/geo/wgs84_pos#' ,
+			gr => 'http://purl.org/goodrelations/v1#' ,
+			ical => 'http://www.w3.org/2002/12/cal/ical#' ,
+			og => 'http://opengraphprotocol.org/schema/' ,
+			owl => 'http://www.w3.org/2002/07/owl#' ,
+			rdf => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#' ,
+			rdfa => 'http://www.w3.org/ns/rdfa#' ,
+			rdfs => 'http://www.w3.org/2000/01/rdf-schema#' ,
+			rel => 'http://purl.org/vocab/relationship/' ,
+			rev => 'http://purl.org/stuff/rev#' ,
+			rss => 'http://purl.org/rss/1.0/' ,
+			sioc => 'http://rdfs.org/sioc/ns#' ,
+			skos => 'http://www.w3.org/2004/02/skos/core#' ,
+			v => 'http://rdf.data-vocabulary.org/#' ,
+			vann => 'http://purl.org/vocab/vann/' ,
+			vcard => 'http://www.w3.org/2006/vcard/ns#' ,
+			void => 'http://rdfs.org/ns/void#' ,
+			xfn => 'http://vocab.sindice.com/xfn#' ,
+			xhv => 'http://www.w3.org/1999/xhtml/vocab#' ,
+			xsd => 'http://www.w3.org/2001/XMLSchema#' ,
+		};
+	
+	if ($curie =~ m/^([^:]+):(.*)$/)
+	{
+		my ($pfx, $sfx) = ($1, $2);
+		
+		if (defined $preferred->{$pfx})
+		{
+			push @main_errs,
+				RDF::RDFa::Linter::Error->new(
+					'subject' => RDF::Trine::Node::Resource->new($url),
+					'text'    => "CURIE '$curie' used but '$pfx' is not bound - perhaps you forgot to specify xmlns:${pfx}=\"".$preferred->{$pfx}."\"",
+					'level'   => 5,
+					);
+		}
+		elsif ($pfx !~ m'^(http|https|file|ftp|urn|tag|mailto|acct|data|
+			fax|tel|modem|gopher|info|news|sip|irc|javascript|sgn|ssh|xri|widget)$'ix)
+		{
+			push @main_errs,
+				RDF::RDFa::Linter::Error->new(
+					'subject' => RDF::Trine::Node::Resource->new($url),
+					'text'    => "CURIE '$curie' used but '$pfx' is not bound - perhaps you forgot to specify xmlns:${pfx}=\"SOMETHING\"",
+					'level'   => 1,
+					);
+		}
+	}
+
+	return $uri;
 }
