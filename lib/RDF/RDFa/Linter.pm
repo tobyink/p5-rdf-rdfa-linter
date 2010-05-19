@@ -29,6 +29,12 @@ sub new
 	return $self;
 }
 
+sub info
+{
+	my ($self) = @_;
+	return $self->{'lint'}->info;
+}
+
 sub filtered_graph
 {
 	my ($self) = @_;

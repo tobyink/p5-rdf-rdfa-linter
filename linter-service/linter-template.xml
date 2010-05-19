@@ -1,0 +1,108 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head profile="http://www.w3.org/1999/xhtml/vocab">
+		<title />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" />
+		<script type="text/javascript">
+			$(function () {
+				$('.tabs').addClass('jquery');
+			
+				var tabContainers = $('.tabs > div');
+				tabContainers.hide().filter(':first').show();
+				
+				$('.tabs .tabNavigation a').click(function () {
+					tabContainers.hide();
+					tabContainers.filter(this.hash).show();
+					$('.tabs .tabNavigation a').removeClass('selected');
+					$(this).addClass('selected');
+					return false;
+				}).filter(':first').click();
+			});
+		</script>
+		<style>
+			.jquery .tabNavigation {
+				 list-style: none;
+				 margin: 0;
+				 padding: 0;
+			}
+
+			.jquery .tabNavigation li {
+				 display: inline;
+			}
+
+			.jquery .tabNavigation li a {
+				 padding: 3px 5px;
+				 background-color: #ccc;
+				 color: #000;
+				 text-decoration: none;
+			}
+
+			.jquery .tabNavigation li a.selected,
+			.jquery .tabNavigation li a:hover {
+				 background-color: #333;
+				 color: #fff;
+				 padding-top: 7px;
+			}
+			
+			.jquery .tabNavigation li a:focus {
+				outline: 0;
+			}
+
+			.tabs > div {
+				padding: 5px;
+				margin-top: 3px;
+				border: 2px solid #333;
+			}
+			
+			.tabs > div h2 {
+				margin-top: 0;
+			}
+
+			div.rdfa > div
+			{
+				background: #fd9;
+				border: 1px solid #db7;
+				margin: 1em;
+				padding: 0.67em;
+			}
+
+			div.rdfa > div h3
+			{
+				margin: 0;
+				padding: 0;
+			}
+
+			div.rdfa > div span.rdf-type
+			{
+				float: right;
+				text-align: right;
+				width: 40px;
+				position: relative;
+				top: -1.67em;
+			}
+
+			div.rdfa > div dl dt
+			{
+				margin: 0.5em 0 0;
+				padding: 0;
+				font-weight: bold;
+				font-style: italic;
+				font-size: smaller;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="head" />
+		<form action="" method="get">
+			<fieldset>
+				<legend>Check a URL</legend>
+				<label for="url">URL:</label>
+				<input id="url" name="url" type="url" />
+				<input type="submit" value="Check" />
+			</fieldset>
+		</form>
+		<div class="summary" />
+		<div class="tabs">
+			<ul class="tabNavigation" />
+		</div>
+	</body>
+</html>
