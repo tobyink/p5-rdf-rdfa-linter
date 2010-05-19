@@ -1,10 +1,14 @@
-use lib "lib";
-use lib "../HTML-HTML5-Writer/lib";
+#!/usr/bin/perl
+
+use lib "/home/tai/src/perlmods/HTML-HTML5-Writer/lib";
+use lib "/home/tai/src/perlmods/RDF-RDFa-Generator/lib";
+use lib "/home/tai/src/perlmods/RDF-RDFa-Linter/lib";
 
 use constant XHTML_NS => 'http://www.w3.org/1999/xhtml';
 use CGI;
 use File::Slurp qw'slurp';
 use HTML::HTML5::Writer;
+use HTTP::Cache::Transparent (BasePath=>'/tmp/cache/');
 use HTTP::Negotiate qw'choose';
 use JSON;
 use RDF::RDFa::Generator;
