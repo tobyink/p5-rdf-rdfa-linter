@@ -15,6 +15,7 @@ lib/RDF/RDFa/Linter/Error.pm
 lib/RDF/RDFa/Linter.pm
 lib/RDF/RDFa/Linter/Service/CreativeCommons.pm
 lib/RDF/RDFa/Linter/Service/Facebook.pm
+lib/RDF/RDFa/Linter/Service/Google.pm
 lib/RDF/RDFa/Linter/Service.pm
 
 inc/Module/AutoInstall.pm
