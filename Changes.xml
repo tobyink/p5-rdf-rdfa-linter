@@ -36,6 +36,21 @@
     <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.02.tar.gz"/>
     <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.02</revision>
   </Version>
+  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-03">
+    <dcs:changeset>
+      <rdf:Description>
+        <dcs:item>
+          <dcs:Addition>
+            <rdfs:label xml:lang="en">Add very minimal checks for Google Rich Snippets.</rdfs:label>
+          </dcs:Addition>
+        </dcs:item>
+        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-02"/>
+      </rdf:Description>
+    </dcs:changeset>
+    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-22</dc:issued>
+    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.03.tar.gz"/>
+    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.03</revision>
+  </Version>
   <Project rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/project">
     <bug-database rdf:resource="http://rt.cpan.org/Dist/Display.html?Queue=RDF-RDFa-Linter"/>
     <created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-07</created>
@@ -49,6 +64,7 @@
     <programming-language>Perl</programming-language>
     <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-01"/>
     <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-02"/>
+    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-03"/>
     <repository>
       <SVNRepository>
         <browse rdf:resource="http://goddamn.co.uk/viewvc/perlmods/RDF-RDFa-Linter/"/>
@@ -59,6 +75,7 @@
     <rdfs:seeAlso rdf:resource="http://check.rdfa.info/"/>
   </Project>
   <foaf:Person rdf:about="http://tobyinkster.co.uk/#i">
+    <ns1:sameAs xmlns:ns1="http://www.w3.org/2002/07/owl#" rdf:resource="http://purl.org/NET/cpan-uri/person/tobyink"/>
     <foaf:homepage rdf:resource="http://tobyinkster.co.uk/"/>
     <foaf:mbox rdf:resource="mailto:tobyink@cpan.org"/>
     <foaf:name>Toby Inkster</foaf:name>

@@ -7,7 +7,7 @@ use constant OGP_NS => 'http://opengraphprotocol.org/schema/';
 use constant FB_NS  => 'http://developers.facebook.com/schema/';
 use RDF::TrineShortcuts qw'rdf_query rdf_statement';
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 our @ogp_terms = qw(title type image url description site_name
 	latitude longitude street-address locality region postal-code country-name
@@ -85,9 +85,6 @@ sub _check_sane_coordinates
 		push @{ $r->{ $row->{'subject'}->as_ntriples }->{'latitude'} }, $row->{'latitude'}
 			if defined $row->{'latitude'};
 	}
-	
-	use Data::Dumper;
-	print Dumper($r);
 	
 	foreach my $x (values %$r)
 	{		

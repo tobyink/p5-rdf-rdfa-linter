@@ -10,6 +10,9 @@ Home page:    <http://search.cpan.org/dist/RDF-RDFa-Linter/>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=RDF-RDFa-Linter>
 Maintainer:   Toby Inkster <mailto:tobyink@cpan.org>
 
+0.03 [2010-05-22]
+ - (Addition) Add very minimal checks for Google Rich Snippets.
+
 0.02 [2010-05-21]
  - (Addition) Add longitude and latitude sanity checks for OGP.
 

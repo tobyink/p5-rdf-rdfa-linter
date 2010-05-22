@@ -5,10 +5,11 @@ use common::sense;
 use RDF::RDFa::Linter::Error;
 use RDF::RDFa::Linter::Service::CreativeCommons;
 use RDF::RDFa::Linter::Service::Facebook;
+use RDF::RDFa::Linter::Service::Google;
 use RDF::RDFa::Parser;
 use RDF::Trine;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub new
 {
