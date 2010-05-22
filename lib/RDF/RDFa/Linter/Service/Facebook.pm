@@ -7,7 +7,7 @@ use constant OGP_NS => 'http://opengraphprotocol.org/schema/';
 use constant FB_NS  => 'http://developers.facebook.com/schema/';
 use RDF::TrineShortcuts qw'rdf_query rdf_statement';
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 our @ogp_terms = qw(title type image url description site_name
 	latitude longitude street-address locality region postal-code country-name
@@ -63,8 +63,175 @@ sub find_errors
 	
 	push @rv, $self->_check_unknown_types;
 	push @rv, $self->_check_required_properties;
+	push @rv, $self->_check_sane_coordinates;
 	
 	return @rv;
+}
+
+sub _check_sane_coordinates
+{
+	my ($self) = @_;
+	my @errs;
+	
+	my $sparql = sprintf('SELECT * WHERE { { ?subject <%s%s> ?latitude . } UNION { ?subject <%s%s> ?longitude . } }', OGP_NS, 'latitude', OGP_NS, 'longitude');
+	my $iter   = rdf_query($sparql, $self->filtered_graph);
+	
+	my $r = {};
+	while (my $row = $iter->next)
+	{
+		$r->{ $row->{'subject'}->as_ntriples }->{'subject'} = $row->{'subject'};
+		push @{ $r->{ $row->{'subject'}->as_ntriples }->{'longitude'} }, $row->{'longitude'}
+			if defined $row->{'longitude'};
+		push @{ $r->{ $row->{'subject'}->as_ntriples }->{'latitude'} }, $row->{'latitude'}
+			if defined $row->{'latitude'};
+	}
+	
+	use Data::Dumper;
+	print Dumper($r);
+	
+	foreach my $x (values %$r)
+	{		
+		if (@{ $x->{latitude} } && !@{ $x->{longitude} })
+		{
+			push @errs,
+				RDF::RDFa::Linter::Error->new(
+					'subject' => $x->{'subject'},
+					'text'    => 'og:latitude is defined, but og:longitude is not',
+					'level'   => 1,
+					'link'    => 'http://opengraphprotocol.org/#location',
+				);
+		}
+		if (!@{ $x->{latitude} } && @{ $x->{longitude} })
+		{
+			push @errs,
+				RDF::RDFa::Linter::Error->new(
+					'subject' => $x->{'subject'},
+					'text'    => 'og:longitude is defined, but og:latitude is not',
+					'level'   => 1,
+					'link'    => 'http://opengraphprotocol.org/#location',
+				);
+		}
+		if (defined $x->{latitude}->[1])
+		{
+			push @errs,
+				RDF::RDFa::Linter::Error->new(
+					'subject' => $x->{'subject'},
+					'text'    => 'Multiple values for og:latitude',
+					'level'   => 2,
+					'link'    => 'http://opengraphprotocol.org/#location',
+				);
+		}
+		if (defined $x->{longitude}->[1])
+		{
+			push @errs,
+				RDF::RDFa::Linter::Error->new(
+					'subject' => $x->{'subject'},
+					'text'    => 'Multiple values for og:longitude',
+					'level'   => 2,
+					'link'    => 'http://opengraphprotocol.org/#location',
+				);
+		}
+		if (defined $x->{longitude}->[0] && defined $x->{latitude}->[0]
+		&& $x->{longitude}->[0]->is_literal && $x->{latitude}->[0]->is_literal
+		&& $x->{longitude}->[0]->literal_value == 0 && $x->{latitude}->[0]->literal_value == 0)
+		{
+			push @errs,
+				RDF::RDFa::Linter::Error->new(
+					'subject' => $x->{'subject'},
+					'text'    => 'The co-ordinates (0,0) are given for latitude and longitude. These refer to a location in the Atlantic Ocean not too far away from Ghana. These co-ordinates are rarely genuine and are more often the result of dumping data into a page without checking if it contains null values.',
+					'level'   => 1,
+					'link'    => 'http://opengraphprotocol.org/#location',
+				);
+		}
+		foreach my $l (@{ $x->{latitude} })
+		{
+			if (!$l->is_literal)
+			{
+				push @errs,
+					RDF::RDFa::Linter::Error->new(
+						'subject' => $x->{'subject'},
+						'text'    => 'Non-literal value for og:latitude: '.$l->as_ntriples,
+						'level'   => 3,
+						'link'    => 'http://opengraphprotocol.org/#location',
+					);
+			}
+			elsif ($l->literal_value !~ /^[\+\-]?\d+(\.\d+)?$/)
+			{
+				push @errs,
+					RDF::RDFa::Linter::Error->new(
+						'subject' => $x->{'subject'},
+						'text'    => 'Non-numeric value for og:latitude: '.$l->as_ntriples,
+						'level'   => 3,
+						'link'    => 'http://opengraphprotocol.org/#location',
+					);
+			}
+			elsif ($l->literal_value + 0 > 90)
+			{
+				push @errs,
+					RDF::RDFa::Linter::Error->new(
+						'subject' => $x->{'subject'},
+						'text'    => 'og:latitude is further North than Santa Claus: '.$l->as_ntriples,
+						'level'   => 3,
+						'link'    => 'http://en.wikipedia.org/wiki/Latitude',
+					);
+			}
+			elsif ($l->literal_value + 0 < -90)
+			{
+				push @errs,
+					RDF::RDFa::Linter::Error->new(
+						'subject' => $x->{'subject'},
+						'text'    => 'og:latitude is further South than possible: '.$l->as_ntriples,
+						'level'   => 3,
+						'link'    => 'http://en.wikipedia.org/wiki/Latitude',
+					);
+			}
+		}
+		foreach my $l (@{ $x->{longitude} })
+		{
+			if (!$l->is_literal)
+			{
+				push @errs,
+					RDF::RDFa::Linter::Error->new(
+						'subject' => $x->{'subject'},
+						'text'    => 'Non-literal value for og:longitude: '.$l->as_ntriples,
+						'level'   => 3,
+						'link'    => 'http://opengraphprotocol.org/#location',
+					);
+			}
+			elsif ($l->literal_value !~ /^[\+\-]?\d+(\.\d+)?$/)
+			{
+				push @errs,
+					RDF::RDFa::Linter::Error->new(
+						'subject' => $x->{'subject'},
+						'text'    => 'Non-numeric value for og:longitude: '.$l->as_ntriples,
+						'level'   => 3,
+						'link'    => 'http://opengraphprotocol.org/#location',
+					);
+			}
+			elsif ($l->literal_value + 0 > 180)
+			{
+				push @errs,
+					RDF::RDFa::Linter::Error->new(
+						'subject' => $x->{'subject'},
+						'text'    => 'og:longitude is further East than possible: '.$l->as_ntriples,
+						'level'   => 3,
+						'link'    => 'http://en.wikipedia.org/wiki/Longitude',
+					);
+			}
+			elsif ($l->literal_value + 0 < -180)
+			{
+				push @errs,
+					RDF::RDFa::Linter::Error->new(
+						'subject' => $x->{'subject'},
+						'text'    => 'og:longitude is further West than possible: '.$l->as_ntriples,
+						'level'   => 3,
+						'link'    => 'http://en.wikipedia.org/wiki/Longitude',
+					);
+			}
+		}
+	}
+	
+	return @errs;
 }
 
 sub _check_unknown_types

@@ -27,6 +27,17 @@ my:v_0-01
 	:revision       "0.01"^^xsd:string ;
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.01.tar.gz> ;
 	rdfs:label      "First release"@en .
+	
+my:v_0-02
+
+	a               :Version ;
+	dc:issued       "2010-05-21"^^xsd:date ;
+	:revision       "0.02"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.02.tar.gz> ;
+	dcs:changeset [
+		dcs:versus my:v_0-01 ;
+		dcs:item [ a dcs:Addition ; rdfs:label "Add longitude and latitude sanity checks for OGP."@en ]
+		] .
 
 #############################################################
 
@@ -46,7 +57,7 @@ my:project
 	:tester         toby:i ;
 	:created        "2010-05-07"^^xsd:date ;
 	:license        <http://dev.perl.org/licenses/> ;
-	:release        my:v_0-01 ;
+	:release        my:v_0-01 , my:v_0-02 ;
 	rdfs:seeAlso    <http://check.rdfa.info/> .
 
 #############################################################

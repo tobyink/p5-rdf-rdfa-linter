@@ -6,7 +6,7 @@ use RDF::RDFa::Linter::Error;
 use RDF::Trine;
 use RDF::Trine::Iterator qw'sgrep';
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub sgrep_filter
 {

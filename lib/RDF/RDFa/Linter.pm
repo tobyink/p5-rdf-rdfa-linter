@@ -8,7 +8,7 @@ use RDF::RDFa::Linter::Service::Facebook;
 use RDF::RDFa::Parser;
 use RDF::Trine;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub new
 {

@@ -21,6 +21,21 @@
     <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.01</revision>
     <rdfs:label xml:lang="en">First release</rdfs:label>
   </Version>
+  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-02">
+    <dcs:changeset>
+      <rdf:Description>
+        <dcs:item>
+          <dcs:Addition>
+            <rdfs:label xml:lang="en">Add longitude and latitude sanity checks for OGP.</rdfs:label>
+          </dcs:Addition>
+        </dcs:item>
+        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-01"/>
+      </rdf:Description>
+    </dcs:changeset>
+    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-21</dc:issued>
+    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.02.tar.gz"/>
+    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.02</revision>
+  </Version>
   <Project rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/project">
     <bug-database rdf:resource="http://rt.cpan.org/Dist/Display.html?Queue=RDF-RDFa-Linter"/>
     <created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-07</created>
@@ -33,6 +48,7 @@
     <name>RDF-RDFa-Linter</name>
     <programming-language>Perl</programming-language>
     <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-01"/>
+    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-02"/>
     <repository>
       <SVNRepository>
         <browse rdf:resource="http://goddamn.co.uk/viewvc/perlmods/RDF-RDFa-Linter/"/>

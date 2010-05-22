@@ -13,4 +13,4 @@ my $linter = RDF::RDFa::Linter->new('Facebook', $uri, $parser);
 
 my $gen = RDF::RDFa::Generator->new(style  => 'HTML::Pretty');
 
-say $gen->create_document($linter->filtered_graph, notes=>[$linter->find_errors])->toString;
+print Dumper([$linter->find_errors]);
