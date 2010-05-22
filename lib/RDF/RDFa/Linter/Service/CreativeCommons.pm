@@ -11,7 +11,7 @@ use constant {
 	};
 use RDF::TrineShortcuts qw'rdf_query rdf_statement';
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub sgrep_filter
 {

@@ -29,4 +29,4 @@ resources:
   homepage: http://search.cpan.org/dist/RDF-RDFa-Linter/
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/viewvc/perlmods/RDF-RDFa-Linter/
-version: 0.03
+version: 0.04
