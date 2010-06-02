@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head profile="http://www.w3.org/1999/xhtml/vocab">
-		<title />
+		<title xmlns:dc="http://purl.org/dc/terms/" property="dc:title" />
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" />
 		<script type="text/javascript">
 			$(function () {
@@ -9,102 +9,79 @@
 				var tabContainers = $('.tabs > div');
 				tabContainers.hide().filter(':first').show();
 				
-				$('.tabs .tabNavigation a').click(function () {
+				$('.tabNavigation a').click(function () {
 					tabContainers.hide();
 					tabContainers.filter(this.hash).show();
-					$('.tabs .tabNavigation a').removeClass('selected');
+					$('.tabNavigation a').removeClass('selected');
 					$(this).addClass('selected');
 					return false;
 				}).filter(':first').click();
 			});
 		</script>
-		<style>
-			.jquery .tabNavigation {
-				 list-style: none;
-				 margin: 0;
-				 padding: 0;
-			}
-
-			.jquery .tabNavigation li {
-				 display: inline;
-			}
-
-			.jquery .tabNavigation li a {
-				 padding: 3px 5px;
-				 background-color: #ccc;
-				 color: #000;
-				 text-decoration: none;
-			}
-
-			.jquery .tabNavigation li a.selected,
-			.jquery .tabNavigation li a:hover {
-				 background-color: #333;
-				 color: #fff;
-				 padding-top: 7px;
-			}
-			
-			.jquery .tabNavigation li a:focus {
-				outline: 0;
-			}
-
-			.tabs > div {
-				padding: 5px;
-				margin-top: 3px;
-				border: 2px solid #333;
-			}
-			
-			.tabs > div h2 {
-				margin-top: 0;
-			}
-
-			div.rdfa > div
-			{
-				background: #fd9;
-				border: 1px solid #db7;
-				margin: 1em;
-				padding: 0.67em;
-			}
-
-			div.rdfa > div h3
-			{
-				margin: 0;
-				padding: 0;
-			}
-
-			div.rdfa > div span.rdf-type
-			{
-				float: right;
-				text-align: right;
-				width: 40px;
-				position: relative;
-				top: -1.67em;
-			}
-
-			div.rdfa > div dl dt
-			{
-				margin: 0.5em 0 0;
-				padding: 0;
-				font-weight: bold;
-				font-style: italic;
-				font-size: smaller;
-			}
+		<style type="text/css">
+			@import url("images/PixelGreen.css");
 		</style>
 	</head>
 	<body>
-		<header class="head" />
-		<form action="" method="get">
-			<fieldset>
-				<legend>Check a URL</legend>
-				<label for="url">URL:</label>
-				<input id="url" name="url" type="url" />
-				<input type="submit" value="Check" />
-			</fieldset>
-		</form>
-		<div class="summary" />
-		<div class="tabs">
-			<ul class="tabNavigation" />
+		<div id="wrap">
+			<div id="header">
+				<div id="header-content">
+					<div class="head" />
+					<div id="slogan" class="summary" />
+					<ul>
+						<li><a href="/">Home</a></li>
+						<li><a href="#" class="selected">Results</a></li>
+						<li><a href="/faq">FAQ</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="content-wrap">
+				<div id="content">
+					<div id="main" class="nosidebar">
+						<div class="tabNavigationContainer">
+							<span>Result tabs:</span>
+							<ul class="tabNavigation" />
+						</div>
+						<div class="tabs" />
+					</div>
+				</div>
+			</div>
+			<div id="footer">
+				<div id="footer-content">
+					<div class="col float-left space-sep">
+						<h6>RDFa Links</h6>
+						<ul class="flist">
+							<li><a href="http://www.w3.org/TR/rdfa-syntax/">XHTML+RDFa 1.0 Recommendation</a></li>
+							<li><a href="http://www.w3.org/TR/rdfa-core/">RDFa Core 1.1 Draft</a></li>
+							<li><a href="http://www.w3.org/TR/xhtml-rdfa/">XHTML+RDFa 1.1 Draft</a></li>
+							<li><a href="http://www.w3.org/TR/rdfa-in-html/">HTML+RDFa Draft</a></li>
+							<li><a href="http://www.w3.org/TR/xhtml-rdfa-primer/">RDFa Primer</a></li>
+							<li><a href="http://rdfa.info/">rdfa.info</a></li>
+						</ul>
+					</div>
+					<div class="col float-left space-sep">
+						<h6>Service Links</h6>
+						<ul class="flist">
+							<li><a href="http://opengraphprotocol.org/">Open Graph Protocol</a></li>
+							<li><a href="http://www.w3.org/Submission/ccREL/">ccREL</a></li>
+							<li><a href="http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=99170">Google Rich Snippets</a></li>
+						</ul>
+					</div>
+					<div class="col float-left">
+						<p xmlns:foaf="http://xmlns.com/foaf/0.1/" rel="foaf:maker"
+						rev="foaf:made">Programming by <a about="http://tobyinkster.co.uk/#i"
+						typeof="foaf:Person" rel="foaf:homepage" href="http://tobyinkster.co.uk/"
+						property="foaf:name">Toby Inkster</a>.</p>
+						<p>Hosting donated by <a href="http://melvincarvalho.com/"
+						>Melvin Carvalho</a> and domain name supplied by <a
+						href="http://creativecommons.org/">Creative Commons</a>.</p>
+						<p>Most icons taken from <a href="http://www.famfamfam.com/lab/icons/silk/"
+						>FamFamFam Silk</a>.</p>
+						<p>Design based on <a href="http://www.styleshout.com/templates/preview/PixelGreen13/index.html"
+						>Pixel Green</a> by <a href="http://www.styleshout.com/">styleshout</a>.</p>
+					</div>
+				</div>
+			</div>
 		</div>
-		<p><small>Most icons taken from <a href="http://www.famfamfam.com/lab/icons/silk/"
-		>FamFamFam Silk</a>.</small></p>
 	</body>
 </html>
