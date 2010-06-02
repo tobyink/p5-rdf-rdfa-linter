@@ -3,6 +3,7 @@
 use common::sense;
 use constant XHTML_NS => 'http://www.w3.org/1999/xhtml';
 use CGI qw'';
+use CGI::Carp qw'fatalsToBrowser';
 use Data::Dumper qw'';
 use Digest::SHA1 qw'sha1_hex';
 use File::Slurp qw'slurp';
