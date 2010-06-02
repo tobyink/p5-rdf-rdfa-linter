@@ -45,7 +45,7 @@ elsif ($CGI->param('source') =~ /post/i)
 	$url = 'widget://'.sha1_hex($content).'.rdfa/self'
 		unless length $url;
 }
-elsif ($url =~ /referr?er/i && length $CGI->referer)
+elsif ($url =~ /^referr?er$/i && length $CGI->referer)
 {
 	$url = $CGI->referer;
 	$source = "referer <$url>";
