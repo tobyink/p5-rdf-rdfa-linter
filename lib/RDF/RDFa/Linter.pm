@@ -9,7 +9,7 @@ use RDF::RDFa::Linter::Service::Google;
 use RDF::RDFa::Parser;
 use RDF::Trine;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 sub new
 {

@@ -1,10 +1,82 @@
-<div about="#a">
-<span property="og:longitude og:latitude">0</span>
-</div>
-
-<div about="#b">
-<span property="og:longitude">0</span>
-<span property="og:latitude">+1</span>
-<span property="og:latitude">91</span>
-</div>
-
+$VAR1 = [
+          bless( {
+                   'level' => 1,
+                   'text' => 'Prefix \'og\' bound to <http://opengraphprotocol.org/schema/>, instead of the usual <http://ogp.me/ns#> - this is allowed, but unusual.',
+                   'subject' => bless( [
+                                         'URI',
+                                         'http://srv.buzzword.org.uk/opengraph-to-json.html'
+                                       ], 'RDF::Trine::Node::Resource' )
+                 }, 'RDF::RDFa::Linter::Error' ),
+          bless( {
+                   'link' => 'http://groups.google.com/group/open-graph-protocol/msg/7391c87e994edc4d',
+                   'level' => 2,
+                   'text' => '<http://opengraphprotocol.org/schema/title> URI is deprecated. Use the <http://ogp.me/ns#> URIs instead.',
+                   'subject' => bless( [
+                                         'URI',
+                                         'http://srv.buzzword.org.uk/opengraph-to-json.html'
+                                       ], 'RDF::Query::Node::Resource' )
+                 }, 'RDF::RDFa::Linter::Error' ),
+          bless( {
+                   'link' => 'http://groups.google.com/group/open-graph-protocol/msg/7391c87e994edc4d',
+                   'level' => 2,
+                   'text' => '<http://opengraphprotocol.org/schema/url> URI is deprecated. Use the <http://ogp.me/ns#> URIs instead.',
+                   'subject' => bless( [
+                                         'URI',
+                                         'http://srv.buzzword.org.uk/opengraph-to-json.html'
+                                       ], 'RDF::Query::Node::Resource' )
+                 }, 'RDF::RDFa::Linter::Error' ),
+          bless( {
+                   'link' => 'http://groups.google.com/group/open-graph-protocol/msg/7391c87e994edc4d',
+                   'level' => 2,
+                   'text' => '<http://opengraphprotocol.org/schema/description> URI is deprecated. Use the <http://ogp.me/ns#> URIs instead.',
+                   'subject' => bless( [
+                                         'URI',
+                                         'http://srv.buzzword.org.uk/opengraph-to-json.html'
+                                       ], 'RDF::Query::Node::Resource' )
+                 }, 'RDF::RDFa::Linter::Error' ),
+          bless( {
+                   'link' => 'http://groups.google.com/group/open-graph-protocol/msg/7391c87e994edc4d',
+                   'level' => 2,
+                   'text' => '<http://opengraphprotocol.org/schema/type> URI is deprecated. Use the <http://ogp.me/ns#> URIs instead.',
+                   'subject' => bless( [
+                                         'URI',
+                                         'http://srv.buzzword.org.uk/opengraph-to-json.html'
+                                       ], 'RDF::Query::Node::Resource' )
+                 }, 'RDF::RDFa::Linter::Error' ),
+          bless( {
+                   'link' => 'http://opengraphprotocol.org/#metadata',
+                   'level' => 2,
+                   'text' => 'Missing property: og:title',
+                   'subject' => bless( [
+                                         'URI',
+                                         'http://srv.buzzword.org.uk/opengraph-to-json.html'
+                                       ], 'RDF::Trine::Node::Resource' )
+                 }, 'RDF::RDFa::Linter::Error' ),
+          bless( {
+                   'link' => 'http://opengraphprotocol.org/#metadata',
+                   'level' => 2,
+                   'text' => 'Missing property: og:type',
+                   'subject' => bless( [
+                                         'URI',
+                                         'http://srv.buzzword.org.uk/opengraph-to-json.html'
+                                       ], 'RDF::Trine::Node::Resource' )
+                 }, 'RDF::RDFa::Linter::Error' ),
+          bless( {
+                   'link' => 'http://opengraphprotocol.org/#metadata',
+                   'level' => 2,
+                   'text' => 'Missing property: og:image',
+                   'subject' => bless( [
+                                         'URI',
+                                         'http://srv.buzzword.org.uk/opengraph-to-json.html'
+                                       ], 'RDF::Trine::Node::Resource' )
+                 }, 'RDF::RDFa::Linter::Error' ),
+          bless( {
+                   'link' => 'http://opengraphprotocol.org/#metadata',
+                   'level' => 2,
+                   'text' => 'Missing property: og:url',
+                   'subject' => bless( [
+                                         'URI',
+                                         'http://srv.buzzword.org.uk/opengraph-to-json.html'
+                                       ], 'RDF::Trine::Node::Resource' )
+                 }, 'RDF::RDFa::Linter::Error' )
+        ];

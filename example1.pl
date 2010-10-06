@@ -8,7 +8,7 @@ use RDF::RDFa::Parser;
 use RDF::TrineShortcuts;
 
 my $uri    = shift @ARGV || 'http://srv.buzzword.org.uk/opengraph-to-json.html';
-my $parser = RDF::RDFa::Parser->new_from_url($uri);
+my $parser = RDF::RDFa::Parser->new_from_url($uri, RDF::RDFa::Parser::Config->new);
 my $linter = RDF::RDFa::Linter->new('Facebook', $uri, $parser);
 
 my $gen = RDF::RDFa::Generator->new(style  => 'HTML::Pretty');

@@ -3,11 +3,12 @@ package RDF::RDFa::Linter::Service::Facebook;
 use 5.008;
 use base 'RDF::RDFa::Linter::Service';
 use common::sense;
-use constant OGP_NS => 'http://opengraphprotocol.org/schema/';
+use constant OGP_NS => 'http://ogp.me/ns#';
+use constant OLD_NS => 'http://opengraphprotocol.org/schema/';
 use constant FB_NS  => 'http://developers.facebook.com/schema/';
 use RDF::TrineShortcuts qw'rdf_query rdf_statement';
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 our @ogp_terms = qw(title type image url description site_name
 	latitude longitude street-address locality region postal-code country-name
@@ -21,6 +22,9 @@ sub sgrep_filter
 	
 	foreach my $term (@ogp_terms)
 		{ return 1 if $st->predicate->uri eq OGP_NS.$term; }
+
+	foreach my $term (@ogp_terms)
+		{ return 1 if $st->predicate->uri eq OLD_NS.$term; }
 
 	foreach my $term (@fb_terms)
 		{ return 1 if $st->predicate->uri eq FB_NS.$term; }
@@ -61,6 +65,7 @@ sub find_errors
 	my $self = shift;
 	my @rv = $self->SUPER::find_errors(@_);
 	
+	push @rv, $self->_check_old_ns;
 	push @rv, $self->_check_unknown_types;
 	push @rv, $self->_check_required_properties;
 	push @rv, $self->_check_sane_coordinates;
@@ -292,6 +297,28 @@ sub _check_required_properties
 				'link'    => 'http://opengraphprotocol.org/#metadata',
 			)
 			unless defined $hashref->{ $self->{'uri'} }->{ OGP_NS.$prop };
+	}
+	
+	return @errs;
+}
+
+sub _check_old_ns
+{
+	my ($self) = @_;
+	my @errs;
+	
+	my $sparql  = sprintf('SELECT DISTINCT ?s ?p { ?s ?p ?o . FILTER regex(STR(?p), "^%s", "i") }', OLD_NS);
+	my $results = rdf_query($sparql, $self->filtered_graph);
+	
+	while (my $row = $results->next)
+	{
+		push @errs,
+			RDF::RDFa::Linter::Error->new(
+				'subject' => $row->{'s'},
+				'text'    => '<'.$row->{'p'}->uri.'> URI is deprecated. Use the <http://ogp.me/ns#> URIs instead.',
+				'level'   => 2,
+				'link'    => 'http://groups.google.com/group/open-graph-protocol/msg/7391c87e994edc4d',
+			);
 	}
 	
 	return @errs;
