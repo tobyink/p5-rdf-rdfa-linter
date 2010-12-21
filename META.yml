@@ -4,11 +4,23 @@ author:
   - 'Toby Inkster <tobyink@cpan.org>'
 build_requires:
   ExtUtils::MakeMaker: 6.42
+  Module::Signature: 0.66
   Test::More: 0.61
 configure_requires:
   ExtUtils::MakeMaker: 6.42
 distribution_type: module
-generated_by: 'Module::Install version 0.95'
+generated_by: 'Module::Install version 1.00'
+keywords:
+  - SemWeb
+  - Semantic
+  - Web
+  - HTML
+  - XHTML
+  - RDF
+  - RDFa
+  - Linter
+  - Validator
+  - Checker
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -19,9 +31,9 @@ no_index:
     - inc
     - t
 requires:
-  RDF::RDFa::Parser: 1.09_04
+  RDF::RDFa::Parser: 1.093
   RDF::Trine: 0.112
-  RDF::TrineShortcuts: 0.07
+  RDF::TrineShortcuts: 0.100
   XML::LibXML: 1.60
   perl: 5.8.0
 resources:
@@ -29,5 +41,4 @@ resources:
   homepage: http://search.cpan.org/dist/RDF-RDFa-Linter/
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/viewvc/perlmods/RDF-RDFa-Linter/
-version: 0.05
-
+version: 0.050

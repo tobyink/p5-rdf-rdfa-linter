@@ -14,10 +14,11 @@ readme_from         $fn;
 author              'Toby Inkster <tobyink@cpan.org>';
 license             'perl';
 
+test_requires       'Module::Signature'   => '0.66';
 test_requires       'Test::More'          => '0.61';
 requires            'RDF::Trine'          => '0.112';
-requires            'RDF::TrineShortcuts' => '0.07';
-requires            'RDF::RDFa::Parser'   => '1.09_04';
+requires            'RDF::TrineShortcuts' => '0.100';
+requires            'RDF::RDFa::Parser'   => '1.093';
 requires            'XML::LibXML'         => '1.60';
 
 # install_script 'fingerw';
@@ -27,7 +28,9 @@ resources(
 	'repository' => "http://goddamn.co.uk/viewvc/perlmods/$dist/",
 	'bugtracker' => "http://rt.cpan.org/Dist/Display.html?Queue=$dist",
 	);
-	
+
+keywords(qw(SemWeb Semantic Web HTML XHTML RDF RDFa Linter Validator Checker));
+
 write_doap_changes;
 write_doap_changes_xml;
 

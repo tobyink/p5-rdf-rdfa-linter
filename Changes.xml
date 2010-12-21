@@ -1,100 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF
-   xmlns:dc="http://purl.org/dc/terms/"
-   xmlns:dcs="http://ontologi.es/doap-changeset#"
-   xmlns:foaf="http://xmlns.com/foaf/0.1/"
-   xmlns:my="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-   xmlns:toby="http://tobyinkster.co.uk/#"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-   xmlns="http://usefulinc.com/ns/doap#">
-  <rdf:Description rdf:about="file:///home/tai/src/perlmods/RDF-RDFa-Linter/Changes.ttl">
-    <dc:creator rdf:resource="http://tobyinkster.co.uk/#i"/>
-    <dc:description xml:lang="en">Revision history for Perl extension RDF::RDFa::Linter.</dc:description>
-    <dc:subject rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/project"/>
-    <dc:title>Changes</dc:title>
-  </rdf:Description>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-01">
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-19</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.01.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.01</revision>
-    <rdfs:label xml:lang="en">First release</rdfs:label>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-02">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <dcs:Addition>
-            <rdfs:label xml:lang="en">Add longitude and latitude sanity checks for OGP.</rdfs:label>
-          </dcs:Addition>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-01"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-21</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.02.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.02</revision>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-03">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <dcs:Addition>
-            <rdfs:label xml:lang="en">Add very minimal checks for Google Rich Snippets.</rdfs:label>
-          </dcs:Addition>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-02"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-22</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.03.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.03</revision>
-  </Version>
-  <Version rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-04">
-    <dcs:changeset>
-      <rdf:Description>
-        <dcs:item>
-          <dcs:Bugfix>
-            <rdfs:label xml:lang="en">Include Google.pm in the MANIFEST file.</rdfs:label>
-          </dcs:Bugfix>
-        </dcs:item>
-        <dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-03"/>
-      </rdf:Description>
-    </dcs:changeset>
-    <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-22</dc:issued>
-    <file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.04.tar.gz"/>
-    <revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.04</revision>
-  </Version>
-  <Project rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/project">
-    <bug-database rdf:resource="http://rt.cpan.org/Dist/Display.html?Queue=RDF-RDFa-Linter"/>
-    <created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-07</created>
-    <developer rdf:resource="http://tobyinkster.co.uk/#i"/>
-    <documenter rdf:resource="http://tobyinkster.co.uk/#i"/>
-    <download-page rdf:resource="http://search.cpan.org/dist/RDF-RDFa-Linter/"/>
-    <homepage rdf:resource="http://search.cpan.org/dist/RDF-RDFa-Linter/"/>
-    <license rdf:resource="http://dev.perl.org/licenses/"/>
-    <maintainer rdf:resource="http://tobyinkster.co.uk/#i"/>
-    <name>RDF-RDFa-Linter</name>
-    <programming-language>Perl</programming-language>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-01"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-02"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-03"/>
-    <release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-04"/>
-    <repository>
-      <SVNRepository>
-        <browse rdf:resource="http://goddamn.co.uk/viewvc/perlmods/RDF-RDFa-Linter/"/>
-      </SVNRepository>
-    </repository>
-    <shortdesc xml:lang="en">find common mistakes in RDFa files</shortdesc>
-    <tester rdf:resource="http://tobyinkster.co.uk/#i"/>
-    <rdfs:seeAlso rdf:resource="http://check.rdfa.info/"/>
-  </Project>
-  <foaf:Person rdf:about="http://tobyinkster.co.uk/#i">
-    <ns1:sameAs xmlns:ns1="http://www.w3.org/2002/07/owl#" rdf:resource="http://purl.org/NET/cpan-uri/person/tobyink"/>
-    <foaf:homepage rdf:resource="http://tobyinkster.co.uk/"/>
-    <foaf:mbox rdf:resource="mailto:tobyink@cpan.org"/>
-    <foaf:name>Toby Inkster</foaf:name>
-    <foaf:page rdf:resource="http://search.cpan.org/~tobyink/"/>
-  </foaf:Person>
+<rdf:RDF xmlns:dbug="http://ontologi.es/doap-bugs#" xmlns:dc="http://purl.org/dc/terms/" xmlns:dcs="http://ontologi.es/doap-changeset#" xmlns:doap="http://usefulinc.com/ns/doap#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+<rdf:Description rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er0">
+	<dcs:item rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er1"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-01"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er1">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Addition"/>
+	<rdfs:label xml:lang="en">Add longitude and latitude sanity checks for OGP.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er2">
+	<dcs:item rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er3"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-02"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er3">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Addition"/>
+	<rdfs:label xml:lang="en">Add very minimal checks for Google Rich Snippets.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er4">
+	<dcs:item rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er5"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-03"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er5">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Bugfix"/>
+	<rdfs:label xml:lang="en">Include Google.pm in the MANIFEST file.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er6">
+	<dcs:item rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er7"/>
+	<dcs:versus rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-04"/>
+</rdf:Description>
+<rdf:Description rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er7">
+	<rdf:type rdf:resource="http://ontologi.es/doap-changeset#Update"/>
+	<rdfs:label xml:lang="en">Support ogp.me namespace for Open Graph Protocol data.</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er8">
+	<doap:browse rdf:resource="http://goddamn.co.uk/viewvc/perlmods/RDF-RDFa-Linter/"/>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#SVNRepository"/>
+</rdf:Description>
+<rdf:Description rdf:about="file:///home/tai/src/perlmods/RDF-RDFa-Linter/Changes.ttl">
+	<dc:creator rdf:resource="http://tobyinkster.co.uk/#i"/>
+	<dc:description xml:lang="en">Revision history for Perl extension RDF::RDFa::Linter.</dc:description>
+	<dc:subject rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/project"/>
+	<dc:title>Changes</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/project">
+	<doap:bug-database rdf:resource="http://rt.cpan.org/Dist/Display.html?Queue=RDF-RDFa-Linter"/>
+	<doap:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-07</doap:created>
+	<doap:developer rdf:resource="http://tobyinkster.co.uk/#i"/>
+	<doap:documenter rdf:resource="http://tobyinkster.co.uk/#i"/>
+	<doap:download-page rdf:resource="http://search.cpan.org/dist/RDF-RDFa-Linter/"/>
+	<doap:homepage rdf:resource="http://search.cpan.org/dist/RDF-RDFa-Linter/"/>
+	<doap:license rdf:resource="http://dev.perl.org/licenses/"/>
+	<doap:maintainer rdf:resource="http://tobyinkster.co.uk/#i"/>
+	<doap:name>RDF-RDFa-Linter</doap:name>
+	<doap:programming-language>Perl</doap:programming-language>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-01"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-02"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-03"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-04"/>
+	<doap:release rdf:resource="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-050"/>
+	<doap:repository rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er8"/>
+	<doap:shortdesc xml:lang="en">find common mistakes in RDFa files</doap:shortdesc>
+	<doap:tester rdf:resource="http://tobyinkster.co.uk/#i"/>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Project"/>
+	<rdfs:seeAlso rdf:resource="http://check.rdfa.info/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-01">
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-19</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.01.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.01</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+	<rdfs:label xml:lang="en">First release</rdfs:label>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-02">
+	<dcs:changeset rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er0"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-21</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.02.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.02</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-03">
+	<dcs:changeset rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er2"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-22</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.03.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.03</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-04">
+	<dcs:changeset rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er4"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-05-22</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.04.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.04</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://purl.org/NET/cpan-uri/dist/RDF-RDFa-Linter/v_0-050">
+	<dcs:changeset rdf:nodeID="rF7A645C80CEC11E0BB91C918F2B3BE5Er6"/>
+	<dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2010-12-21</dc:issued>
+	<doap:file-release rdf:resource="http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.050.tar.gz"/>
+	<doap:revision rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.050</doap:revision>
+	<rdf:type rdf:resource="http://usefulinc.com/ns/doap#Version"/>
+</rdf:Description>
+<rdf:Description xmlns:ns1="http://www.w3.org/2002/07/owl#" rdf:about="http://tobyinkster.co.uk/#i">
+	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+	<ns1:sameAs rdf:resource="http://purl.org/NET/cpan-uri/person/tobyink"/>
+	<foaf:homepage rdf:resource="http://tobyinkster.co.uk/"/>
+	<foaf:mbox rdf:resource="mailto:tobyink@cpan.org"/>
+	<foaf:name>Toby Inkster</foaf:name>
+	<foaf:page rdf:resource="http://search.cpan.org/~tobyink/"/>
+</rdf:Description>
 </rdf:RDF>

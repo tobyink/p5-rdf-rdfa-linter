@@ -61,6 +61,17 @@ my:v_0-04
 		dcs:item [ a dcs:Bugfix ; rdfs:label "Include Google.pm in the MANIFEST file."@en ]
 		] .
 
+my:v_0-050
+
+	a               :Version ;
+	dc:issued       "2010-12-21"^^xsd:date ;
+	:revision       "0.050"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.050.tar.gz> ;
+	dcs:changeset [
+		dcs:versus my:v_0-04 ;
+		dcs:item [ a dcs:Update ; rdfs:label "Support ogp.me namespace for Open Graph Protocol data."@en ]
+		] .
+
 #############################################################
 
 my:project
@@ -79,7 +90,7 @@ my:project
 	:tester         toby:i ;
 	:created        "2010-05-07"^^xsd:date ;
 	:license        <http://dev.perl.org/licenses/> ;
-	:release        my:v_0-01 , my:v_0-02 , my:v_0-03 , my:v_0-04 ;
+	:release        my:v_0-01 , my:v_0-02 , my:v_0-03 , my:v_0-04 , my:v_0-050 ;
 	rdfs:seeAlso    <http://check.rdfa.info/> .
 
 #############################################################
