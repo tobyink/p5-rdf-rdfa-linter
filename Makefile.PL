@@ -18,10 +18,9 @@ test_requires       'Module::Signature'   => '0.66';
 test_requires       'Test::More'          => '0.61';
 requires            'RDF::Trine'          => '0.112';
 requires            'RDF::TrineShortcuts' => '0.100';
+requires            'RDF::RDFa::Generator'=> '0.02';
 requires            'RDF::RDFa::Parser'   => '1.093';
 requires            'XML::LibXML'         => '1.60';
-
-# install_script 'fingerw';
 
 resources(
 	'homepage'   => "http://search.cpan.org/dist/$dist/",

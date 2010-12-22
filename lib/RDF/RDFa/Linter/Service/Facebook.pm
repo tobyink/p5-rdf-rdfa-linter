@@ -8,7 +8,7 @@ use constant OLD_NS => 'http://opengraphprotocol.org/schema/';
 use constant FB_NS  => 'http://developers.facebook.com/schema/';
 use RDF::TrineShortcuts qw'rdf_query rdf_statement';
 
-our $VERSION = '0.050';
+our $VERSION = '0.051';
 
 our @ogp_terms = qw(title type image url description site_name
 	latitude longitude street-address locality region postal-code country-name

@@ -31,6 +31,7 @@ no_index:
     - inc
     - t
 requires:
+  RDF::RDFa::Generator: 0.02
   RDF::RDFa::Parser: 1.093
   RDF::Trine: 0.112
   RDF::TrineShortcuts: 0.100
@@ -41,4 +42,4 @@ resources:
   homepage: http://search.cpan.org/dist/RDF-RDFa-Linter/
   license: http://dev.perl.org/licenses/
   repository: http://goddamn.co.uk/viewvc/perlmods/RDF-RDFa-Linter/
-version: 0.050
+version: 0.051

@@ -72,6 +72,17 @@ my:v_0-050
 		dcs:item [ a dcs:Update ; rdfs:label "Support ogp.me namespace for Open Graph Protocol data."@en ]
 		] .
 
+my:v_0-051
+
+	a               :Version ;
+	dc:issued       "2010-12-22"^^xsd:date ;
+	:revision       "0.051"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.051.tar.gz> ;
+	dcs:changeset [
+		dcs:versus my:v_0-050 ;
+		dcs:item [ rdfs:label "Add RDF::RDFa::Generator dependency to Makefile.PL."@en ]
+		] .
+
 #############################################################
 
 my:project
@@ -90,7 +101,7 @@ my:project
 	:tester         toby:i ;
 	:created        "2010-05-07"^^xsd:date ;
 	:license        <http://dev.perl.org/licenses/> ;
-	:release        my:v_0-01 , my:v_0-02 , my:v_0-03 , my:v_0-04 , my:v_0-050 ;
+	:release        my:v_0-01 , my:v_0-02 , my:v_0-03 , my:v_0-04 , my:v_0-050 , my:v_0-051 ;
 	rdfs:seeAlso    <http://check.rdfa.info/> .
 
 #############################################################
