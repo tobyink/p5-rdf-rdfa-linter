@@ -31,8 +31,9 @@ keywords(qw(SemWeb Semantic Web HTML XHTML RDF RDFa Linter Validator Checker));
 
 write_doap_changes;
 write_doap_changes_xml;
+auto_license;
+auto_manifest;
 
-include 'Test::Signature';
 auto_install;
 WriteAll(
 	'meta' => 1,
