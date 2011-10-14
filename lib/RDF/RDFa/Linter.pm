@@ -6,6 +6,7 @@ use RDF::RDFa::Linter::Error;
 use RDF::RDFa::Linter::Service::CreativeCommons;
 use RDF::RDFa::Linter::Service::Facebook;
 use RDF::RDFa::Linter::Service::Google;
+use RDF::RDFa::Linter::Service::SchemaOrg;
 use RDF::RDFa::Parser;
 use RDF::Trine;
 
