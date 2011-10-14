@@ -9,7 +9,10 @@ use RDF::TrineShortcuts;
 
 my $html = <<'HTML';
 <p vocab="http://schema.org/" typeof="Place">
-	<span property="sugarContent">1</span>
+	<span rel="sugarContent">
+		<b typeof="Place">1</b>
+	</span>
+	<span property="numTracks">wrgfe6</span>
 </p>
 HTML
 my $uri    = 'http://example.com/';

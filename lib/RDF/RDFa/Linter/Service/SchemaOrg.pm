@@ -10,6 +10,7 @@ use File::ShareDir qw[];
 use File::Spec qw[];
 use Set::Scalar;
 use JSON qw[decode_json encode_json];
+use Scalar::Util qw[looks_like_number blessed];
 
 our $VERSION = '0.051';
 
@@ -65,6 +66,7 @@ sub find_errors
 	$self->_detect_types;
 	
 	push @rv, $self->_find_errors_domain;
+	push @rv, $self->_find_errors_range;
 	
 	return @rv;
 }
@@ -80,7 +82,7 @@ sub _detect_types
 			grep { $_->is_resource }
 			$self->{filtered}->objects($subj, $RDF->type)
 			);
-		$self->{_types}{$subj} = $set->members if scalar $set->members;
+		$self->{_types}{$subj} = [$set->members] if scalar $set->members;
 	}
 }
 
@@ -92,10 +94,8 @@ sub _find_errors_domain
 	$self->{filtered}->get_statements(undef, undef, undef)->each(sub {
 		my $st = shift;
 		
-		print "Checking predicate ", $st->predicate, "\n";
-		
 		return if $st->predicate->equal($RDF->type);
-		#return unless ref $self->{_types}{$st->subject};
+		return unless ref $self->{_types}{$st->subject};
 		
 		my $explicit   = Set::Scalar->new(@{$self->{_types}{$st->subject} || []});
 		my $domain     = Set::Scalar->new(@{$Properties{$st->predicate->uri}{domain} || []});
@@ -105,13 +105,8 @@ sub _find_errors_domain
 			$set;
 			};
 
-		print "Domain ", $domain->members, "\n";
-		print "Ext Domain ", $ext_domain->members, "\n";
-		print "Explicit ", $explicit->members, "\n";
-
 		unless ($explicit->intersection($ext_domain))
 		{
-			print "No intersection\n";
 			my ($first) = $domain->members;
 			
 			push @rv, RDF::RDFa::Linter::Error->new(
@@ -119,6 +114,143 @@ sub _find_errors_domain
 				'text'    => sprintf("Property %s should be used with items of type %s.",
 					$st->predicate->uri,
 					(join ' or ', $domain->members),
+					),
+				'level'   => 4,
+				'link'    => $first,
+				);
+		}
+	});
+	
+	return @rv;
+}
+
+sub _find_errors_range
+{
+	my ($self) = shift;
+	my @rv;
+	
+	$self->{filtered}->get_statements(undef, undef, undef)->each(sub {
+		my $st = shift;
+		
+		return if $st->predicate->equal($RDF->type);
+		
+		if ($Properties{$st->predicate->uri}{is_dt})
+		{
+			foreach my $range (@{$Properties{$st->predicate->uri}{range}})
+			{
+				if ($range eq $SCHEMA->Text->uri)
+				{
+					return if $st->object->is_literal;
+				}
+				if ($range eq $SCHEMA->Number->uri or $range eq $SCHEMA->Float->uri or $range eq $SCHEMA->Integer->uri)
+				{
+					if ($st->object->is_literal and looks_like_number($st->object->literal_value))
+					{
+						push @rv, RDF::RDFa::Linter::Error->new(
+							'subject' => $st->subject,
+							'text'    => sprintf('Value "%s" for property %s should probably have a numeric datatype set.', $st->object->literal_value, $st->predicate->uri),
+							'level'   => 5,
+							'link'    => 'http://www.w3.org/TR/xmlschema-2/#built-in-primitive-datatypes',
+							) unless $st->object->has_datatype;
+						return;
+					}
+					elsif (1 == scalar @{$Properties{$st->predicate->uri}{range}})
+					{
+						push @rv, RDF::RDFa::Linter::Error->new(
+							'subject' => $st->subject,
+							'text'    => sprintf('Value "%s" for property %s does not seem to be a number.', $st->object->literal_value, $st->predicate->uri),
+							'level'   => 2,
+							'link'    => 'http://schema.org/Number',
+							);
+						return;
+					}
+				}
+				if ($range eq $SCHEMA->Boolean->uri)
+				{
+					if ($st->object->is_literal and $st->object->literal_value =~ /^(true|false|0|1)$/i)
+					{
+						push @rv, RDF::RDFa::Linter::Error->new(
+							'subject' => $st->subject,
+							'text'    => sprintf('Value "%s" for property %s should probably have its datatype set to xsd:boolean.', $st->object->literal_value, $st->predicate->uri),
+							'level'   => 5,
+							'link'    => 'http://www.w3.org/TR/xmlschema-2/#built-in-primitive-datatypes',
+							) unless $st->object->has_datatype && $st->object->literal_datatype eq $XSD->boolean->uri;
+						return;
+					}
+					elsif (1 == scalar @{$Properties{$st->predicate->uri}{range}})
+					{
+						push @rv, RDF::RDFa::Linter::Error->new(
+							'subject' => $st->subject,
+							'text'    => sprintf('Value "%s" for property %s does not seem to be a boolean.', $st->object->literal_value, $st->predicate->uri),
+							'level'   => 2,
+							'link'    => 'http://schema.org/Boolean',
+							);
+						return;
+					}
+				}
+				if ($range eq $SCHEMA->Date->uri)
+				{
+					if ($st->object->is_literal and $st->object->literal_value =~ /^\d{4}-\d{2}-\d{2}$/)
+					{
+						push @rv, RDF::RDFa::Linter::Error->new(
+							'subject' => $st->subject,
+							'text'    => sprintf('Value "%s" for property %s should probably have its datatype set to xsd:date.', $st->object->literal_value, $st->predicate->uri),
+							'level'   => 5,
+							'link'    => 'http://www.w3.org/TR/xmlschema-2/#built-in-primitive-datatypes',
+							) unless $st->object->has_datatype && $st->object->literal_datatype eq $XSD->boolean->uri;
+						return;
+					}
+					elsif (1 == scalar @{$Properties{$st->predicate->uri}{range}})
+					{
+						push @rv, RDF::RDFa::Linter::Error->new(
+							'subject' => $st->subject,
+							'text'    => sprintf('Value "%s" for property %s does not seem to be a date.', $st->object->literal_value, $st->predicate->uri),
+							'level'   => 2,
+							'link'    => 'http://schema.org/Date',
+							);
+						return;
+					}
+				}
+				if ($range eq $SCHEMA->URL->uri)
+				{
+					if (($st->object->is_literal and $st->object->literal_value =~ /^(http|https|ftp|mailto):\S+$/i)
+					or $st->object->is_resource)
+					{
+						return;
+					}
+					elsif (1 == scalar @{$Properties{$st->predicate->uri}{range}})
+					{
+						push @rv, RDF::RDFa::Linter::Error->new(
+							'subject' => $st->subject,
+							'text'    => sprintf('Value "%s" for property %s does not seem to be a URL.', $st->object->literal_value, $st->predicate->uri),
+							'level'   => 2,
+							'link'    => 'http://schema.org/URL',
+							);
+						return;
+					}
+				}
+			}
+		}
+		
+		return unless ref $self->{_types}{$st->object};
+		
+		my $explicit   = Set::Scalar->new(@{$self->{_types}{$st->object} || []});
+		my $range      = Set::Scalar->new(@{$Properties{$st->predicate->uri}{range} || []});
+		my $ext_range  = do {
+			my $set = Set::Scalar->new;
+			$set->insert( @{$Classes{$_}{subclasses} || []} ) foreach $range->members;
+			$set;
+			};
+
+		unless ($explicit->intersection($ext_range))
+		{
+			my ($first) = $range->members;
+			
+			push @rv, RDF::RDFa::Linter::Error->new(
+				'subject' => $st->object,
+				'text'    => sprintf("Values of property %s should be of type %s.",
+					$st->predicate->uri,
+					(join ' or ', $range->members),
 					),
 				'level'   => 4,
 				'link'    => $first,
