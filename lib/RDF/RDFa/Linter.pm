@@ -137,10 +137,6 @@ __END__
 
 RDF::RDFa::Linter - find common mistakes in RDFa files
 
-=head1 VERSION
-
-0.01
-
 =head1 SYNOPSIS
 
  my $parser = RDF::RDFa::Parser->new_from_url($input_url);
