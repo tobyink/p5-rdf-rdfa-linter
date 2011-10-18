@@ -1,3 +1,2 @@
-TODO:
-* Add some more items to this list.
-* Add keywords to Makefile.PL
+* Better checks for schema.org.
+* Facebook: check integer, boolean and enumerated properties.
