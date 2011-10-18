@@ -6,7 +6,7 @@ use common::sense;
 use constant V_NS => 'http://rdf.data-vocabulary.org/#';
 use RDF::TrineShortcuts qw'rdf_query rdf_statement';
 
-our $VERSION = '0.051';
+our $VERSION = '0.052';
 
 my @properties = qw(name author cholesterol servingSize region
 	tag max instruction prepTime contact tel category sugar friend count

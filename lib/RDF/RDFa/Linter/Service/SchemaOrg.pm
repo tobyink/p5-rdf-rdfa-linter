@@ -12,7 +12,7 @@ use Set::Scalar;
 use JSON qw[decode_json encode_json];
 use Scalar::Util qw[looks_like_number blessed];
 
-our $VERSION = '0.051';
+our $VERSION = '0.052';
 
 use RDF::Trine::Namespace qw[RDF RDFS OWL XSD];
 our $SCHEMA = RDF::Trine::Namespace->new(SCHEMA_NS);
@@ -136,73 +136,87 @@ sub _find_errors_range
 		
 		if ($Properties{$st->predicate->uri}{is_dt})
 		{
+			my %results;
+			
 			foreach my $range (@{$Properties{$st->predicate->uri}{range}})
 			{
+				$results{$range}{RANGE} = $range;
+				
 				if ($range eq $SCHEMA->Text->uri)
 				{
-					return if $st->object->is_literal;
+					if ($st->object->is_literal)
+					{
+						$results{$range}{PASS} = 1;
+					}
+					else
+					{
+						$results{$range}{ERROR} = RDF::RDFa::Linter::Error->new(
+							'subject' => $st->subject,
+							'text'    => sprintf('Value for property %s is expected to be text.', $st->predicate->uri),
+							'level'   => 2,
+							'link'    => 'http://schema.org/Text',
+							);
+					}
 				}
 				if ($range eq $SCHEMA->Number->uri or $range eq $SCHEMA->Float->uri or $range eq $SCHEMA->Integer->uri)
 				{
 					if ($st->object->is_literal and looks_like_number($st->object->literal_value))
 					{
-						push @rv, RDF::RDFa::Linter::Error->new(
+						$results{$range}{PASS} = 1;
+						$results{$range}{HINT} = RDF::RDFa::Linter::Error->new(
 							'subject' => $st->subject,
 							'text'    => sprintf('Value "%s" for property %s should probably have a numeric datatype set.', $st->object->literal_value, $st->predicate->uri),
 							'level'   => 5,
 							'link'    => 'http://www.w3.org/TR/xmlschema-2/#built-in-primitive-datatypes',
 							) unless $st->object->has_datatype;
-						return;
 					}
-					elsif (1 == scalar @{$Properties{$st->predicate->uri}{range}})
+					else
 					{
-						push @rv, RDF::RDFa::Linter::Error->new(
+						$results{$range}{ERROR} = RDF::RDFa::Linter::Error->new(
 							'subject' => $st->subject,
 							'text'    => sprintf('Value "%s" for property %s does not seem to be a number.', $st->object->literal_value, $st->predicate->uri),
 							'level'   => 2,
 							'link'    => 'http://schema.org/Number',
 							);
-						return;
 					}
 				}
 				if ($range eq $SCHEMA->Boolean->uri)
 				{
 					if ($st->object->is_literal and $st->object->literal_value =~ /^(true|false|0|1)$/i)
 					{
-						push @rv, RDF::RDFa::Linter::Error->new(
+						$results{$range}{PASS} = 1;
+						$results{$range}{HINT} = RDF::RDFa::Linter::Error->new(
 							'subject' => $st->subject,
 							'text'    => sprintf('Value "%s" for property %s should probably have its datatype set to xsd:boolean.', $st->object->literal_value, $st->predicate->uri),
 							'level'   => 5,
 							'link'    => 'http://www.w3.org/TR/xmlschema-2/#built-in-primitive-datatypes',
 							) unless $st->object->has_datatype && $st->object->literal_datatype eq $XSD->boolean->uri;
-						return;
 					}
-					elsif (1 == scalar @{$Properties{$st->predicate->uri}{range}})
+					else
 					{
-						push @rv, RDF::RDFa::Linter::Error->new(
+						$results{$range}{ERROR} = RDF::RDFa::Linter::Error->new(
 							'subject' => $st->subject,
 							'text'    => sprintf('Value "%s" for property %s does not seem to be a boolean.', $st->object->literal_value, $st->predicate->uri),
 							'level'   => 2,
 							'link'    => 'http://schema.org/Boolean',
 							);
-						return;
 					}
 				}
 				if ($range eq $SCHEMA->Date->uri)
 				{
 					if ($st->object->is_literal and $st->object->literal_value =~ /^\d{4}-\d{2}-\d{2}$/)
 					{
-						push @rv, RDF::RDFa::Linter::Error->new(
+						$results{$range}{PASS} = 1;
+						$results{$range}{HINT} = RDF::RDFa::Linter::Error->new(
 							'subject' => $st->subject,
 							'text'    => sprintf('Value "%s" for property %s should probably have its datatype set to xsd:date.', $st->object->literal_value, $st->predicate->uri),
 							'level'   => 5,
 							'link'    => 'http://www.w3.org/TR/xmlschema-2/#built-in-primitive-datatypes',
 							) unless $st->object->has_datatype && $st->object->literal_datatype eq $XSD->boolean->uri;
-						return;
 					}
-					elsif (1 == scalar @{$Properties{$st->predicate->uri}{range}})
+					else
 					{
-						push @rv, RDF::RDFa::Linter::Error->new(
+						$results{$range}{ERROR} = RDF::RDFa::Linter::Error->new(
 							'subject' => $st->subject,
 							'text'    => sprintf('Value "%s" for property %s does not seem to be a date.', $st->object->literal_value, $st->predicate->uri),
 							'level'   => 2,
@@ -216,22 +230,56 @@ sub _find_errors_range
 					if (($st->object->is_literal and $st->object->literal_value =~ /^(http|https|ftp|mailto):\S+$/i)
 					or $st->object->is_resource)
 					{
-						return;
+						$results{$range}{PASS} = 1;
 					}
-					elsif (1 == scalar @{$Properties{$st->predicate->uri}{range}})
+					else
 					{
-						push @rv, RDF::RDFa::Linter::Error->new(
+						$results{$range}{ERROR} = RDF::RDFa::Linter::Error->new(
 							'subject' => $st->subject,
 							'text'    => sprintf('Value "%s" for property %s does not seem to be a URL.', $st->object->literal_value, $st->predicate->uri),
 							'level'   => 2,
 							'link'    => 'http://schema.org/URL',
 							);
-						return;
 					}
 				}
 			}
+			
+			my $passed = 0;
+			my ($hint, $error);
+			foreach my $k (sort keys %results)
+			{
+				my $r = $results{$k};
+				
+				if (defined $r->{PASS} and defined $r->{HINT})
+				{
+					if (!$passed)
+					{
+						$passed = $r->{RANGE};
+						$hint   = $r->{HINT};
+					}
+				}
+				elsif (defined $r->{PASS} and !defined $r->{HINT})
+				{
+					$passed = $r->{RANGE};
+					$hint   = undef;
+				}
+				elsif (defined $r->{ERROR})
+				{
+					$error  = $r->{ERROR};
+				}
+			}
+			
+			if ($passed)
+			{
+				push @rv, $hint if defined $hint;
+			}
+			else
+			{
+				push @rv, $error if defined $error;
+			}
 		}
 		
+		return @rv unless @rv;
 		return unless ref $self->{_types}{$st->object};
 		
 		my $explicit   = Set::Scalar->new(@{$self->{_types}{$st->object} || []});

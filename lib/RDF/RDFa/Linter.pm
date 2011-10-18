@@ -10,7 +10,7 @@ use RDF::RDFa::Linter::Service::SchemaOrg;
 use RDF::RDFa::Parser;
 use RDF::Trine;
 
-our $VERSION = '0.051';
+our $VERSION = '0.052';
 
 sub new
 {
