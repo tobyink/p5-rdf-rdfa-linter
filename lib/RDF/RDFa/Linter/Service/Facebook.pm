@@ -1,7 +1,7 @@
 package RDF::RDFa::Linter::Service::Facebook;
 
 use 5.008;
-use base 'RDF::RDFa::Linter::Service';
+use parent 'RDF::RDFa::Linter::Service';
 use common::sense;
 use constant OGP_NS => 'http://ogp.me/ns#';
 use constant ARTICLE_NS => 'http://ogp.me/ns/article#';

@@ -7,6 +7,6 @@
 	:version_from _:main ;
 	:readme_from _:main ;
 	:test_requires "Test::More 0.61" ;
-	:requires "RDF::Trine" , "RDF::TrineShortcuts", "RDF::RDFa::Generator", "RDF::RDFa::Parser" , "XML::LibXML" .
+	:requires "RDF::Trine" , "RDF::TrineShortcuts", "RDF::RDFa::Generator", "RDF::RDFa::Parser" , "XML::LibXML" , "parent" .
 
 _:main <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName> "lib/RDF/RDFa/Linter.pm" .

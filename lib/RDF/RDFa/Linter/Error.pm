@@ -1,7 +1,7 @@
 package RDF::RDFa::Linter::Error;
 
 use 5.008;
-use base qw'RDF::RDFa::Generator::HTML::Pretty::Note';
+use parent qw'RDF::RDFa::Generator::HTML::Pretty::Note';
 use common::sense;
 use constant XHTML_NS => 'http://www.w3.org/1999/xhtml';
 use XML::LibXML qw':all';

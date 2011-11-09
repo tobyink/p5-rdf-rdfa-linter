@@ -1,7 +1,7 @@
 package RDF::RDFa::Linter::Service::CreativeCommons;
 
 use 5.008;
-use base 'RDF::RDFa::Linter::Service';
+use parent 'RDF::RDFa::Linter::Service';
 use common::sense;
 use constant {
 	DC_NS       => 'http://purl.org/dc/elements/1.1/',

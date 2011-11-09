@@ -2,7 +2,7 @@ package RDF::RDFa::Linter::Service::SchemaOrg;
 
 use 5.008;
 use autodie;
-use base 'RDF::RDFa::Linter::Service';
+use parent 'RDF::RDFa::Linter::Service';
 use common::sense;
 use constant SCHEMA_NS => 'http://schema.org/';
 use RDF::TrineShortcuts qw'rdf_query rdf_statement';

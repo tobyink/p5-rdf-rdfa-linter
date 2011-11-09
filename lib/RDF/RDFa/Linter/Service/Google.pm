@@ -1,7 +1,7 @@
 package RDF::RDFa::Linter::Service::Google;
 
 use 5.008;
-use base 'RDF::RDFa::Linter::Service';
+use parent 'RDF::RDFa::Linter::Service';
 use common::sense;
 use constant V_NS => 'http://rdf.data-vocabulary.org/#';
 use RDF::TrineShortcuts qw'rdf_query rdf_statement';
