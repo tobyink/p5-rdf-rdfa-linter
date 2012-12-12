@@ -1,12 +1,12 @@
 package RDF::RDFa::Linter::Service;
 
 use 5.008;
-use common::sense;
+use strict;
 use RDF::RDFa::Linter::Error;
 use RDF::Trine;
 use RDF::Trine::Iterator qw'sgrep';
 
-our $VERSION = '0.052';
+our $VERSION = '0.053';
 
 sub sgrep_filter
 {

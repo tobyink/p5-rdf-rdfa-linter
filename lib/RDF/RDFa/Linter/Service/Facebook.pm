@@ -1,8 +1,8 @@
 package RDF::RDFa::Linter::Service::Facebook;
 
 use 5.008;
-use parent 'RDF::RDFa::Linter::Service';
-use common::sense;
+use base 'RDF::RDFa::Linter::Service';
+use strict;
 use constant OGP_NS => 'http://ogp.me/ns#';
 use constant ARTICLE_NS => 'http://ogp.me/ns/article#';
 use constant BOOK_NS => 'http://ogp.me/ns/book#';
@@ -12,9 +12,9 @@ use constant VIDEO_NS => 'http://ogp.me/ns/video#';
 use constant WEBSITE_NS => 'http://ogp.me/ns/website#';
 use constant OLD_NS => 'http://opengraphprotocol.org/schema/';
 use constant FB_NS  => 'http://developers.facebook.com/schema/';
-use RDF::TrineShortcuts qw'rdf_query rdf_statement';
+use RDF::TrineX::Functions -shortcuts, statement => { -as => 'rdf_statement' };
 
-our $VERSION = '0.052';
+our $VERSION = '0.053';
 
 #our @ogp_terms = qw(title type image url description site_name
 #	latitude longitude street-address locality region postal-code country-name
@@ -137,7 +137,7 @@ sub _check_sane_coordinates
 	my @errs;
 	
 	my $sparql = sprintf('SELECT * WHERE { { ?subject <%s%s> ?latitude . } UNION { ?subject <%s%s> ?longitude . } }', OGP_NS, 'latitude', OGP_NS, 'longitude');
-	my $iter   = rdf_query($sparql, $self->filtered_graph);
+	my $iter   = RDF::RDFa::Linter::__rdf_query($sparql, $self->filtered_graph);
 	
 	my $r = {};
 	while (my $row = $iter->next)
@@ -309,7 +309,7 @@ sub _check_unknown_types
 	              music\.(song|album|playlist|radio_station)|music';
 	
 	my $sparql = sprintf('SELECT * WHERE { ?subject <%s%s> ?type . }', OGP_NS, 'type');
-	my $iter   = rdf_query($sparql, $self->filtered_graph);
+	my $iter   = RDF::RDFa::Linter::__rdf_query($sparql, $self->filtered_graph);
 	
 	my $already = {};
 		
@@ -441,7 +441,7 @@ sub _check_required_properties
 	my @errs;
 	
 	my $sparql  = sprintf('DESCRIBE <%s>', $self->{'uri'});
-	my $hashref = rdf_query($sparql, $self->filtered_graph)->as_hashref;
+	my $hashref = RDF::RDFa::Linter::__rdf_query($sparql, $self->filtered_graph)->as_hashref;
 	
 	foreach my $prop (@$Required)
 	{
@@ -464,10 +464,11 @@ sub _check_unknown_properties
 	my @errs;
 	
 	my $sparql  = sprintf('SELECT ?prop { ?s ?prop ?o . }');
-	my $results = rdf_query($sparql, $self->filtered_graph);
+	my $results = RDF::RDFa::Linter::__rdf_query($sparql, $self->filtered_graph);
 	
 	while (my $row = $results->next)
 	{
+		next unless $row->{prop}->can('uri');
 		my ($ns,$term) = ($row->{prop}->uri =~ $ns_re);
 		next unless ref $Terms->{$ns};
 		next if grep { $_ eq $term } @{$Terms->{$ns}};
@@ -510,7 +511,7 @@ sub _check_old_ns
 	my @errs;
 	
 	my $sparql  = sprintf('SELECT DISTINCT ?s ?p { ?s ?p ?o . FILTER regex(STR(?p), "^%s", "i") }', OLD_NS);
-	my $results = rdf_query($sparql, $self->filtered_graph);
+	my $results = RDF::RDFa::Linter::__rdf_query($sparql, $self->filtered_graph);
 	
 	while (my $row = $results->next)
 	{
@@ -543,7 +544,7 @@ sub _check_verticals
 	while (my ($type, $namespace) = each %verticals)
 	{
 		my $sparql  = sprintf('SELECT DISTINCT ?s ?p { ?s ?p ?o . FILTER regex(STR(?p), "^%s", "i") }', $namespace);
-		my $results = rdf_query($sparql, $self->filtered_graph);
+		my $results = RDF::RDFa::Linter::__rdf_query($sparql, $self->filtered_graph);
 		
 		while (my $row = $results->next)
 		{

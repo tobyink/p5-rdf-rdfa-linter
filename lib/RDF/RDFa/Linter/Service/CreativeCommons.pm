@@ -1,17 +1,17 @@
 package RDF::RDFa::Linter::Service::CreativeCommons;
 
 use 5.008;
-use parent 'RDF::RDFa::Linter::Service';
-use common::sense;
+use base 'RDF::RDFa::Linter::Service';
+use strict;
 use constant {
 	DC_NS       => 'http://purl.org/dc/elements/1.1/',
 	DCMITYPE_NS => 'http://purl.org/dc/dcmitype/',
 	CC_NS       => 'http://creativecommons.org/ns#',
 	XHV_NS      => 'http://www.w3.org/1999/xhtml/vocab#',
 	};
-use RDF::TrineShortcuts qw'rdf_query rdf_statement';
+use RDF::TrineX::Functions -shortcuts, statement => { -as => 'rdf_statement' };
 
-our $VERSION = '0.052';
+our $VERSION = '0.053';
 
 sub sgrep_filter
 {
@@ -82,7 +82,7 @@ sub _check_license_sane
 	foreach my $ns ((CC_NS, XHV_NS, 'http://web.resource.org/cc/', 'http://purl.org/dc/terms/', 'http://purl.org/dc/elements/1.1/rights.'))
 	{
 		my $sparql = sprintf('SELECT * WHERE { ?subject <%s%s> ?license . }', $ns, 'license');
-		my $iter   = rdf_query($sparql, $self->filtered_graph);
+		my $iter   = RDF::RDFa::Linter::__rdf_query($sparql, $self->filtered_graph);
 		
 		while (my $row = $iter->next)
 		{
@@ -123,7 +123,7 @@ sub _check_unknown_types
 		MovingImage PhysicalObject Service Software Sound StillImage Text';
 	
 	my $sparql = sprintf('SELECT * WHERE { ?subject <%s%s> ?type . }', DC_NS, 'type');
-	my $iter   = rdf_query($sparql, $self->filtered_graph);
+	my $iter   = RDF::RDFa::Linter::__rdf_query($sparql, $self->filtered_graph);
 	
 	while (my $row = $iter->next)
 	{

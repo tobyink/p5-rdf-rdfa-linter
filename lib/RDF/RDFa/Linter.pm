@@ -1,7 +1,7 @@
 package RDF::RDFa::Linter;
 
 use 5.008;
-use common::sense;
+use strict;
 use RDF::RDFa::Linter::Error;
 use RDF::RDFa::Linter::Service::CreativeCommons;
 use RDF::RDFa::Linter::Service::Facebook;
@@ -9,8 +9,9 @@ use RDF::RDFa::Linter::Service::Google;
 use RDF::RDFa::Linter::Service::SchemaOrg;
 use RDF::RDFa::Parser;
 use RDF::Trine;
+use RDF::Query;
 
-our $VERSION = '0.052';
+our $VERSION = '0.053';
 
 sub new
 {
@@ -127,6 +128,23 @@ sub cb_oncurie
 	}
 
 	return $uri;
+}
+
+sub __rdf_query
+{
+	my ($sparql, $model) = @_;
+	my $result = RDF::Query->new($sparql)->execute($model);
+
+	if ($result->is_boolean)
+		{ return $result->get_boolean }
+	elsif ($result->is_bindings)
+		{ return $result }
+
+	$result->is_graph or die;
+
+	my $return = RDF::Trine::Model->new;
+	$return->add_hashref( $result->as_hashref );
+	return $return;
 }
 
 1;

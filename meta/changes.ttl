@@ -83,3 +83,14 @@ my:v_0-052
 		dcs:item [ rdfs:label "use Module::Package::RDF"@en ; a dcs:Packaging ]
 		] .
 
+my:project :release my:v_0-053 .
+my:v_0-053
+	a               :Version ;
+	dc:issued       "2012-12-12"^^xsd:date ;
+	:revision       "0.053"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/RDF-RDFa-Linter-0.053.tar.gz> ;
+	dcs:changeset [
+		dcs:versus my:v_0-052 ;
+		dcs:item [ rdfs:label "Switch from RDF::TrineShortcuts to RDF::TrineX::Functions."@en ; a dcs:Update ] ;
+	] .
+

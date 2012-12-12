@@ -1,18 +1,17 @@
 package RDF::RDFa::Linter::Service::SchemaOrg;
 
 use 5.008;
-use autodie;
-use parent 'RDF::RDFa::Linter::Service';
-use common::sense;
+use base 'RDF::RDFa::Linter::Service';
+use strict;
 use constant SCHEMA_NS => 'http://schema.org/';
-use RDF::TrineShortcuts qw'rdf_query rdf_statement';
+use RDF::TrineX::Functions -shortcuts, statement => { -as => 'rdf_statement' };
 use File::ShareDir qw[];
 use File::Spec qw[];
 use Set::Scalar;
 use JSON qw[decode_json encode_json];
 use Scalar::Util qw[looks_like_number blessed];
 
-our $VERSION = '0.052';
+our $VERSION = '0.053';
 
 use RDF::Trine::Namespace qw[RDF RDFS OWL XSD];
 our $SCHEMA = RDF::Trine::Namespace->new(SCHEMA_NS);
